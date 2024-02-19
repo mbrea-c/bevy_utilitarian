@@ -4,7 +4,7 @@ use super::{curve::AsParamCurve, point::Point};
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Reflect, Clone, Serialize, Deserialize)]
+#[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
 struct LinearSegment<P: Point> {
     pub start: P,
     pub end: P,
@@ -20,7 +20,7 @@ impl<P: Point> LinearSegment<P> {
     }
 }
 
-#[derive(Reflect, Clone, Serialize, Deserialize)]
+#[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
 pub struct LinearParamCurve<P: Point> {
     /// List of the `t` value at the start of the segment, followed by line segment
     segments: Vec<(f32, LinearSegment<P>)>,
@@ -107,7 +107,9 @@ impl<P: Point> AsParamCurve<P> for LinearParamCurve<P> {
         let segment_percent =
             (t - self.segment_start(segment_idx)) / self.segment_length(segment_idx);
 
-        self.segment(segment_idx).get_percent(segment_percent)
+        let out = self.segment(segment_idx).get_percent(segment_percent);
+
+        out
     }
 }
 

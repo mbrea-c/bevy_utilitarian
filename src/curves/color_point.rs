@@ -21,9 +21,12 @@ impl Mul<f32> for ColorPoint {
     type Output = Self;
 
     fn mul(self, rhs: f32) -> Self::Output {
-        Self {
-            color: self.color * rhs,
-        }
+        Self::rgba(
+            self.color.r() * rhs,
+            self.color.g() * rhs,
+            self.color.b() * rhs,
+            self.color.a() * rhs,
+        )
     }
 }
 
@@ -31,9 +34,12 @@ impl Add<Self> for ColorPoint {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        Self {
-            color: self.color + rhs.color,
-        }
+        Self::rgba(
+            self.r() + rhs.r(),
+            self.g() + rhs.g(),
+            self.b() + rhs.b(),
+            self.a() + rhs.a(),
+        )
     }
 }
 
@@ -89,5 +95,19 @@ impl Deref for ColorPoint {
 impl From<Color> for ColorPoint {
     fn from(value: Color) -> Self {
         Self { color: value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn alpha_add_works() {
+        let l = ColorPoint::rgba(1., 1., 1., 0.);
+        let r = ColorPoint::rgba(1., 1., 1., 0.7);
+
+        let result = l + r;
+        assert!(result.a() - 0.7 < 0.00001);
     }
 }
