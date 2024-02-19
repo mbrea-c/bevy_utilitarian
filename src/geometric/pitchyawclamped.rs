@@ -85,8 +85,8 @@ impl PitchYawClamped {
 
     /// Takes into account the wrapping of yaw
     pub fn sub_pitchyaw(mut self, other: Self) -> Self {
-        self.p = self.p - other.p;
-        self.y = self.y - other.y;
+        self.p -= other.p;
+        self.y -= other.y;
         self
     }
 

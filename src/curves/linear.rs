@@ -33,7 +33,7 @@ impl<P: Point> LinearParamCurve<P> {
             .map(|(t, p1, p2)| (t, LinearSegment::new(p1, p2)))
             .collect();
 
-        if segments.len() < 1 {
+        if segments.is_empty() {
             panic!("A linear curve requires at least requires at least 1 segment");
         }
 
@@ -92,7 +92,7 @@ impl<P: Point> AsParamCurve<P> for LinearParamCurve<P> {
     fn get(&self, t: f32) -> P {
         let t = t.clamp(0., 1.);
 
-        if self.segments.len() == 0 {
+        if self.segments.is_empty() {
             panic!("LinearCurve has no segments");
         }
 

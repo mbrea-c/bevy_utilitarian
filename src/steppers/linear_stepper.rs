@@ -54,7 +54,7 @@ impl TickInterpolator<Vec3> for LinearStepper<Vec3> {
             self.current = self.target;
         } else if delta_length > 0. {
             let delta = delta.normalize() * max_delta;
-            self.current = self.current + delta;
+            self.current += delta;
         }
     }
 
