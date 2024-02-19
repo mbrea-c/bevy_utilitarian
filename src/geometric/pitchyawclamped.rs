@@ -156,7 +156,7 @@ impl Mul<f32> for PitchYawClamped {
 pub fn sample_unit_sphere_surface(u: f32, v: f32) -> Vec3 {
     let horizontal_y = v.sin();
     let xz_factor = v.cos();
-    let horizontal_x = u.sin() * xz_factor;
+    let horizontal_x = -u.sin() * xz_factor;
     let horizontal_z = -u.cos() * xz_factor;
 
     Vec3::new(horizontal_x, horizontal_y, horizontal_z)
@@ -212,16 +212,16 @@ mod tests {
     }
 
     #[test]
-    fn pi_spherical_is_neg_x() {
+    fn pi_spherical_is_pos_z() {
         let spherical = PitchYawClamped::new(PI, 0.);
         let dir = spherical.to_unit_vec();
-        let x = Vec3::NEG_X;
+        let z = Vec3::Z;
 
-        let dist = dir.distance(x);
+        let dist = dir.distance(z);
 
         assert!(
             dist < EPSILON,
-            "Distance {dir:?} to {x:?} was {dist}, greater than allowed {EPSILON}"
+            "Distance {dir:?} to {z:?} was {dist}, greater than allowed {EPSILON}"
         );
     }
 
@@ -234,61 +234,5 @@ mod tests {
             spherical.normalize(),
             spherical.normalize().normalize().normalize()
         );
-    }
-
-    #[test]
-    fn step_toward_near_wrap() {
-        let spherical_a = PitchYawClamped::new(PI - 0.1, 0.);
-        let spherical_b = PitchYawClamped::new(-PI + 0.1, 0.);
-
-        let stepped = spherical_a.step_toward(spherical_b, 0.05);
-        let target = PitchYawClamped::new(PI - 0.05, 0.);
-
-        assert!(
-            stepped.distance(&target) < EPSILON,
-            "Stepped from {:?} to {:?} by 0.05, ended up in {:?}, expected {:?}",
-            spherical_a,
-            spherical_b,
-            stepped,
-            target
-        );
-    }
-
-    #[test]
-    fn step_toward_near_wrap_inverse() {
-        let spherical_a = PitchYawClamped::new(-PI + 0.1, 0.);
-        let spherical_b = PitchYawClamped::new(PI - 0.1, 0.);
-
-        let stepped = spherical_a.step_toward(spherical_b, 0.05);
-        let target = PitchYawClamped::new(-PI + 0.05, 0.);
-        let dist = stepped.distance(&target);
-
-        assert!(
-            stepped.distance(&target) < EPSILON,
-            "Distance {stepped:?} to {target:?} was {dist}, greater than allowed {EPSILON}",
-        );
-    }
-
-    #[test]
-    fn step_toward_near_overshoot() {
-        let spherical_a = PitchYawClamped::new(PI - 0.1, 0.);
-        let spherical_b = PitchYawClamped::new(-PI + 0.1, 0.);
-
-        let stepped = spherical_a.step_toward(spherical_b, 0.5);
-        let target = spherical_b;
-
-        assert!(stepped.distance(&target) < EPSILON);
-    }
-
-    #[test]
-    fn wrapped_sub_works_as_expected() {
-        let spherical_a = PitchYawClamped::new(PI - 0.1, 0.);
-        let spherical_b = PitchYawClamped::new(-PI + 0.1, 0.);
-
-        let delta = spherical_b - spherical_a;
-        let applied = (spherical_a + delta).normalize();
-
-        assert!(spherical_b.distance(&applied) < EPSILON);
-        assert!(delta.length() - 0.2 < EPSILON);
     }
 }

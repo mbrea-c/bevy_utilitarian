@@ -204,10 +204,10 @@ mod tests {
     }
 
     #[test]
-    fn pi_spherical_is_neg_x() {
+    fn pi_spherical_is_pos_z() {
         let spherical = PitchYawClamped::new(PI, 0.);
         let dir = spherical.to_unit_vec();
-        let x = Vec3::NEG_X;
+        let x = Vec3::Z;
 
         let dist = dir.distance(x);
 
