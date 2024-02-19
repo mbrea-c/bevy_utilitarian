@@ -33,10 +33,9 @@ impl TickInterpolator<PitchYawClamped> for SpringStepper<PitchYawClamped> {
     fn tick(&mut self, dt: Duration) {
         let damping_force = self.velocity * (-self.damping);
         let spring_force = (self.target - self.current) * self.spring;
-        self.velocity = self.velocity
-            + (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
-        self.current =
-            (self.current + self.velocity * dt.as_secs_f32()).normalize();
+        self.velocity =
+            self.velocity + (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
+        self.current = (self.current + self.velocity * dt.as_secs_f32()).normalize();
     }
 
     fn set_target(&mut self, target: PitchYawClamped) {
