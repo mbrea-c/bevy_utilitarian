@@ -1,6 +1,6 @@
-mod curves;
-mod geometric;
-mod steppers;
+pub mod curves;
+pub mod geometric;
+pub mod steppers;
 
 pub mod prelude {
     use super::*;
