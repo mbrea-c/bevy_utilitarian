@@ -1,3 +1,4 @@
+use super::color_point::ColorPoint;
 use bevy::math::prelude::*;
 use std::{
     iter::Sum,
@@ -21,3 +22,4 @@ pub trait Point:
 impl Point for f32 {}
 impl Point for Vec2 {}
 impl Point for Vec3 {}
+impl Point for ColorPoint {}
