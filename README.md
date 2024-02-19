@@ -1,3 +1,6 @@
+![Crates.io](https://img.shields.io/crates/v/bevy_utilitarian) ![Crates.io](https://img.shields.io/crates/d/bevy_utilitarian)
+[![CI](https://github.com/mbrea-c/bevy_utilitarian/actions/workflows/ci.yaml/badge.svg)](https://github.com/mbrea-c/bevy_utilitarian/actions/workflows/ci.yaml)
+
 # Bevy Utilitarian
 
 Contains a varied set of utilities to make bevy programming easier. Currently,
