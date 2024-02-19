@@ -1,10 +1,10 @@
-use bevy::render::color::Color;
+use bevy::{reflect::Reflect, render::color::Color};
 use std::{
     iter::Sum,
     ops::{Add, Deref, Mul, Sub},
 };
 
-#[derive(Default, std::fmt::Debug, Clone, PartialEq, Copy)]
+#[derive(Reflect, Default, Debug, Clone, PartialEq, Copy)]
 pub struct ColorPoint {
     pub color: Color,
 }
@@ -83,5 +83,11 @@ impl Deref for ColorPoint {
 
     fn deref(&self) -> &Self::Target {
         &self.color
+    }
+}
+
+impl From<Color> for ColorPoint {
+    fn from(value: Color) -> Self {
+        Self { color: value }
     }
 }
