@@ -1,11 +1,11 @@
 # Bevy Utilitarian
 
-Contains a varied set of utilities to make bevy programming easier. Currently
-mostly geometric, math and interpolation utilities.
+Contains a varied set of utilities to make bevy programming easier. Currently,
+mostly geometric, maths and interpolation utilities.
 
 ## What?
 
-Currently this library offers:
+Currently, this library offers:
 
 - `curves` module: Parametric curves.
 - `steppers` module: _Dynamic_ interpolation helpers: used for when you cannot
