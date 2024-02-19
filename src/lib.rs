@@ -1,5 +1,6 @@
 pub mod curves;
 pub mod geometric;
+pub mod randomized_values;
 pub mod steppers;
 
 pub mod prelude {
@@ -12,6 +13,7 @@ pub mod prelude {
         point::Point,
     };
     pub use geometric::{pitchyaw::PitchYaw, pitchyawclamped::PitchYawClamped};
+    pub use randomized_values::{RandF32, RandValue, RandVec3};
     pub use steppers::{
         core::TickInterpolator,
         linear_stepper::LinearStepper,

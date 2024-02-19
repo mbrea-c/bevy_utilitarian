@@ -32,6 +32,10 @@ Currently, this library offers:
   direction parameter for animation (where you don't want the character's head to
   turn 360 degrees).
 
+- `randomized_values` module: Offers `RandValue` trait and implementations for
+  `RandVec3` and `RandF32`. They are self-contained data types with an ergonomic
+  API for generating random values based on some parameters.
+
 ## Version table
 
 | `bevy_utilitarian` | `bevy` |
