@@ -85,3 +85,9 @@ impl Deref for ColorPoint {
         &self.color
     }
 }
+
+impl From<Color> for ColorPoint {
+    fn from(value: Color) -> Self {
+        Self { color: value }
+    }
+}
