@@ -41,3 +41,4 @@ Currently, this library offers:
 | `bevy_utilitarian` | `bevy` |
 | ------------------ | ------ |
 | 0.1                | 0.12   |
+| 0.2                | 0.12   |
