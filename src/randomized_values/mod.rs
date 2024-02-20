@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use serde::{Deserialize, Serialize};
 use std::f32::consts::PI;
 
 pub trait RandValue {
@@ -8,7 +9,7 @@ pub trait RandValue {
     fn constant(value: Self::Out) -> Self;
 }
 
-#[derive(Debug, Clone, Copy, Reflect, Default)]
+#[derive(Debug, Clone, Copy, Reflect, Default, Serialize, Deserialize)]
 pub struct RandF32 {
     pub min: f32,
     pub max: f32,
@@ -29,7 +30,7 @@ impl RandValue for RandF32 {
     }
 }
 
-#[derive(Debug, Clone, Copy, Reflect)]
+#[derive(Debug, Clone, Copy, Reflect, Serialize, Deserialize)]
 pub struct RandVec3 {
     pub magnitude: RandF32,
     pub direction: Vec3,
