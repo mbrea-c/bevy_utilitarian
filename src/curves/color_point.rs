@@ -1,10 +1,11 @@
 use bevy::{reflect::Reflect, render::color::Color};
+use serde::{Deserialize, Serialize};
 use std::{
     iter::Sum,
     ops::{Add, Deref, Mul, Sub},
 };
 
-#[derive(Reflect, Default, Debug, Clone, PartialEq, Copy)]
+#[derive(Reflect, Default, Debug, Clone, PartialEq, Copy, Serialize, Deserialize)]
 pub struct ColorPoint {
     pub color: Color,
 }
