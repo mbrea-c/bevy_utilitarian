@@ -78,7 +78,7 @@ impl Sum for ColorPoint {
         let mut c = Color::BLACK;
 
         for i in iter {
-            c += i.color;
+            c = c + i.color;
         }
 
         Self { color: c }
