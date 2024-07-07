@@ -1,16 +1,16 @@
 use std::f32::consts::PI;
 
-use super::{curve::AsParamCurve, point::Point};
-use bevy::prelude::*;
+use super::curve::AsParamCurve;
+use bevy::{math::VectorSpace, prelude::*};
 use serde::{Deserialize, Serialize};
 
 #[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
-struct LinearSegment<P: Point> {
+struct LinearSegment<P: VectorSpace> {
     pub start: P,
     pub end: P,
 }
 
-impl<P: Point> LinearSegment<P> {
+impl<P: VectorSpace> LinearSegment<P> {
     pub fn new(start: P, end: P) -> Self {
         Self { start, end }
     }
@@ -21,12 +21,12 @@ impl<P: Point> LinearSegment<P> {
 }
 
 #[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
-pub struct LinearParamCurve<P: Point> {
+pub struct LinearParamCurve<P: VectorSpace> {
     /// List of the `t` value at the start of the segment, followed by line segment
     segments: Vec<(f32, LinearSegment<P>)>,
 }
 
-impl<P: Point> LinearParamCurve<P> {
+impl<P: VectorSpace> LinearParamCurve<P> {
     pub fn new(segments: impl IntoIterator<Item = (f32, P, P)>) -> Self {
         let segments: Vec<(f32, LinearSegment<P>)> = segments
             .into_iter()
@@ -88,7 +88,7 @@ impl<P: Point> LinearParamCurve<P> {
     }
 }
 
-impl<P: Point> AsParamCurve<P> for LinearParamCurve<P> {
+impl<P: VectorSpace> AsParamCurve<P> for LinearParamCurve<P> {
     fn get(&self, t: f32) -> P {
         let t = t.clamp(0., 1.);
 

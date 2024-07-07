@@ -6,11 +6,9 @@ pub mod steppers;
 pub mod prelude {
     use super::*;
     pub use curves::{
-        color_point::ColorPoint,
         constant::ConstantParamCurve,
         curve::{AsParamCurve, Gradient, ParamCurve},
         linear::LinearParamCurve,
-        point::Point,
     };
     pub use geometric::{pitchyaw::PitchYaw, pitchyawclamped::PitchYawClamped};
     pub use randomized_values::{RandF32, RandValue, RandVec3};
