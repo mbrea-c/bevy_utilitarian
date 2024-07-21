@@ -6,7 +6,7 @@ use bevy::math::{Quat, Vec3};
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
-#[derive(Serialize, Deserialize, Clone, Debug, Default)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
 pub struct LinearStepper<T> {
     pub current: T,
     pub target: T,
