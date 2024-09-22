@@ -45,8 +45,7 @@ impl TickInterpolator<PitchYawClamped> for SpringStepper<PitchYawClamped, Vec2> 
         let damping_force = self.velocity * (-self.damping);
         let spring_force = (self.target - self.current) * self.spring;
         let spring_force = Vec2::new(spring_force.y, spring_force.p);
-        self.velocity =
-            self.velocity + (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
+        self.velocity += (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
         self.current = self.current.tick(dt, self.velocity)
     }
 
