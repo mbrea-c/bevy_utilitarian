@@ -1,25 +1,36 @@
-use super::{super::geometric::pitchyawclamped::PitchYawClamped, core::TickInterpolator};
+use super::{
+    super::geometric::pitchyawclamped::PitchYawClamped, core::TickInterpolator,
+    derivatives::TickDerivative,
+};
 use bevy::math::{Vec2, Vec3};
-use serde::{Deserialize, Serialize};
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::time::Duration;
 
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-pub struct SpringStepper<T> {
+pub struct SpringStepper<T, D = T>
+where
+    D: Serialize + DeserializeOwned,
+    T: TickDerivative<Derivative = D>,
+{
     pub current: T,
     pub target: T,
-    pub velocity: T,
+    pub velocity: <T as TickDerivative>::Derivative,
     pub spring: f32,
     pub damping: f32,
 }
 
 const SPRING_MASS: f32 = 1.;
 
-impl<T: Clone + Default> SpringStepper<T> {
+impl<T, D> SpringStepper<T, D>
+where
+    T: TickDerivative<Derivative = D> + Clone + Default,
+    D: Serialize + DeserializeOwned + Default,
+{
     pub fn new(value: T, spring: f32, damping: f32) -> Self {
         Self {
             current: value.clone(),
             target: value,
-            velocity: T::default(),
+            velocity: D::default(),
             spring,
             damping,
         }
@@ -29,13 +40,14 @@ impl<T: Clone + Default> SpringStepper<T> {
 // --- Concrete implementations
 // -------------------------------------------------------------------------------
 
-impl TickInterpolator<PitchYawClamped> for SpringStepper<PitchYawClamped> {
+impl TickInterpolator<PitchYawClamped> for SpringStepper<PitchYawClamped, Vec2> {
     fn tick(&mut self, dt: Duration) {
         let damping_force = self.velocity * (-self.damping);
         let spring_force = (self.target - self.current) * self.spring;
+        let spring_force = Vec2::new(spring_force.y, spring_force.p);
         self.velocity =
             self.velocity + (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
-        self.current = (self.current + self.velocity * dt.as_secs_f32()).normalize();
+        self.current = self.current.tick(dt, self.velocity)
     }
 
     fn set_target(&mut self, target: PitchYawClamped) {
@@ -47,12 +59,12 @@ impl TickInterpolator<PitchYawClamped> for SpringStepper<PitchYawClamped> {
     }
 }
 
-impl TickInterpolator<f32> for SpringStepper<f32> {
+impl TickInterpolator<f32> for SpringStepper<f32, f32> {
     fn tick(&mut self, dt: Duration) {
         let damping_force = self.velocity * (-self.damping);
         let spring_force = (self.target - self.current) * self.spring;
         self.velocity += (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
-        self.current += self.velocity * dt.as_secs_f32();
+        self.current = self.current.tick(dt, self.velocity);
     }
 
     fn set_target(&mut self, target: f32) {
@@ -69,7 +81,7 @@ impl TickInterpolator<Vec3> for SpringStepper<Vec3> {
         let damping_force = self.velocity * (-self.damping);
         let spring_force = (self.target - self.current) * self.spring;
         self.velocity += (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
-        self.current += self.velocity * dt.as_secs_f32();
+        self.current = self.current.tick(dt, self.velocity);
     }
 
     fn set_target(&mut self, target: Vec3) {
@@ -86,7 +98,7 @@ impl TickInterpolator<Vec2> for SpringStepper<Vec2> {
         let damping_force = self.velocity * (-self.damping);
         let spring_force = (self.target - self.current) * self.spring;
         self.velocity += (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
-        self.current += self.velocity * dt.as_secs_f32();
+        self.current = self.current.tick(dt, self.velocity);
     }
 
     fn set_target(&mut self, target: Vec2) {
