@@ -19,7 +19,7 @@ where
     pub damping: f32,
 }
 
-const SPRING_MASS: f32 = 1.;
+pub const SPRING_MASS: f32 = 1.;
 
 impl<T, D> SpringStepper<T, D>
 where
