@@ -35,6 +35,16 @@ where
             damping,
         }
     }
+
+    pub fn new_with_initial_velocity(value: T, velocity: D, spring: f32, damping: f32) -> Self {
+        Self {
+            current: value.clone(),
+            target: value,
+            velocity,
+            spring,
+            damping,
+        }
+    }
 }
 
 // --- Concrete implementations
