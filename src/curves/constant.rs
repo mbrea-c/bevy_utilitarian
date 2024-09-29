@@ -2,7 +2,7 @@ use super::curve::AsParamCurve;
 use bevy::{math::VectorSpace, reflect::Reflect};
 use serde::{Deserialize, Serialize};
 
-#[derive(Reflect, Serialize, Deserialize, Clone, Debug)]
+#[derive(Reflect, Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct ConstantParamCurve<P: VectorSpace> {
     val: P,
 }

@@ -9,7 +9,7 @@ pub trait AsParamCurve<P: VectorSpace> {
     fn get(&self, t: f32) -> P;
 }
 
-#[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
+#[derive(Reflect, Clone, Serialize, Deserialize, Debug, PartialEq)]
 pub enum ParamCurve<P: VectorSpace> {
     Linear(LinearParamCurve<P>),
     Constant(ConstantParamCurve<P>),

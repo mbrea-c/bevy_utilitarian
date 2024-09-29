@@ -4,7 +4,7 @@ use super::curve::AsParamCurve;
 use bevy::{math::VectorSpace, prelude::*};
 use serde::{Deserialize, Serialize};
 
-#[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
+#[derive(Reflect, Clone, Serialize, Deserialize, Debug, PartialEq)]
 struct LinearSegment<P: VectorSpace> {
     pub start: P,
     pub end: P,
@@ -20,7 +20,7 @@ impl<P: VectorSpace> LinearSegment<P> {
     }
 }
 
-#[derive(Reflect, Clone, Serialize, Deserialize, Debug)]
+#[derive(Reflect, Clone, Serialize, Deserialize, Debug, PartialEq)]
 pub struct LinearParamCurve<P: VectorSpace> {
     /// List of the `t` value at the start of the segment, followed by line segment
     segments: Vec<(f32, LinearSegment<P>)>,
