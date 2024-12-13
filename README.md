@@ -10,7 +10,6 @@ mostly geometric, maths and interpolation utilities.
 
 Currently, this library offers:
 
-- `curves` module: Parametric curves.
 - `steppers` module: _Dynamic_ interpolation helpers: used for when you cannot
   express the change of the value you want to interpolate easily as a parametric
   curve, such as when using a spring-damper system as an interpolator or when
@@ -45,3 +44,4 @@ Currently, this library offers:
 | 0.3                | 0.12   |
 | 0.4                | 0.13   |
 | 0.5                | 0.14   |
+| 0.6                | 0.15   |
