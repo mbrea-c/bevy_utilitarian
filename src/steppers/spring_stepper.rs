@@ -3,7 +3,7 @@ use super::{
     derivatives::TickDerivative,
 };
 use bevy::math::{Vec2, Vec3};
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use std::time::Duration;
 
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
