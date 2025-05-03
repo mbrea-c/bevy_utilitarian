@@ -9,6 +9,6 @@ pub mod prelude {
     pub use steppers::{
         core::TickInterpolator,
         linear_stepper::LinearStepper,
-        spring_stepper::{critical_damp_coeff, SpringStepper, SPRING_MASS},
+        spring_stepper::{SPRING_MASS, SpringStepper, critical_damp_coeff},
     };
 }
