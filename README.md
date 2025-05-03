@@ -45,3 +45,4 @@ Currently, this library offers:
 | 0.4                | 0.13   |
 | 0.5                | 0.14   |
 | 0.6                | 0.15   |
+| 0.7                | 0.16   |
