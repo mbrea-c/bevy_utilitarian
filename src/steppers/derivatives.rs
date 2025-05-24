@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use std::time::Duration;
 
-use crate::prelude::PitchYawClamped;
+use crate::prelude::{PitchYaw, PitchYawClamped};
 
 pub trait TickDerivative {
     type Derivative;
@@ -18,6 +18,18 @@ impl TickDerivative for PitchYawClamped {
             self.p + derivative.y * dt.as_secs_f32(),
             self.clamp_p,
             self.clamp_y,
+        )
+        .normalize()
+    }
+}
+
+impl TickDerivative for PitchYaw {
+    type Derivative = Vec2;
+
+    fn tick(&self, dt: Duration, derivative: Self::Derivative) -> Self {
+        PitchYaw::new(
+            self.y + derivative.x * dt.as_secs_f32(),
+            self.p + derivative.y * dt.as_secs_f32(),
         )
         .normalize()
     }
