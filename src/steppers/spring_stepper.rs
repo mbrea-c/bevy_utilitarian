@@ -1,3 +1,5 @@
+use crate::prelude::PitchYaw;
+
 use super::{
     super::geometric::pitchyawclamped::PitchYawClamped, core::TickInterpolator,
     derivatives::TickDerivative,
@@ -64,6 +66,24 @@ impl TickInterpolator<PitchYawClamped> for SpringStepper<PitchYawClamped, Vec2> 
     }
 
     fn get(&self) -> PitchYawClamped {
+        self.current
+    }
+}
+
+impl TickInterpolator<PitchYaw> for SpringStepper<PitchYaw, Vec2> {
+    fn tick(&mut self, dt: Duration) {
+        let damping_force = self.velocity * (-self.damping);
+        let spring_force = (self.target - self.current) * self.spring;
+        let spring_force = Vec2::new(spring_force.y, spring_force.p);
+        self.velocity += (damping_force + spring_force) * (dt.as_secs_f32() / SPRING_MASS);
+        self.current = self.current.tick(dt, self.velocity)
+    }
+
+    fn set_target(&mut self, target: PitchYaw) {
+        self.target = target;
+    }
+
+    fn get(&self) -> PitchYaw {
         self.current
     }
 }
