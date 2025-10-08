@@ -1,6 +1,6 @@
 [package]
 name = "bevy_utilitarian"
-version = "0.7.0"
+version = "0.8.0"
 edition = "2024"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
@@ -12,7 +12,7 @@ keywords = ["bevy", "gamedev", "utility", "interpolation", "math"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-bevy = { version = "0.16", default-features = false, features = [
+bevy = { version = "0.17", default-features = false, features = [
     "bevy_render",
 ] }
 rand = "0.9.1"
