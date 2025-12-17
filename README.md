@@ -46,3 +46,5 @@ Currently, this library offers:
 | 0.5                | 0.14   |
 | 0.6                | 0.15   |
 | 0.7                | 0.16   |
+| 0.8                | 0.17   |
+| master             | 0.18-rc.1|
