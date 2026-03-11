@@ -6,7 +6,7 @@ use super::{
 };
 use bevy::math::{Vec2, Vec3};
 use serde::{Deserialize, Serialize, de::DeserializeOwned};
-use std::time::Duration;
+use std::{ops::Add, time::Duration};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
 pub struct SpringStepper<T, D = T>
@@ -46,6 +46,13 @@ where
             spring,
             damping,
         }
+    }
+
+    pub fn add_velocity(&mut self, delta_v: D)
+    where
+        D: Add<D, Output = D> + Clone,
+    {
+        self.velocity = self.velocity.clone() + delta_v;
     }
 }
 
