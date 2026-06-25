@@ -9,14 +9,10 @@ use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use std::{ops::Add, time::Duration};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-pub struct SpringStepper<T, D = T>
-where
-    D: Serialize + DeserializeOwned,
-    T: TickDerivative<Derivative = D>,
-{
+pub struct SpringStepper<T, D = T> {
     pub current: T,
     pub target: T,
-    pub velocity: <T as TickDerivative>::Derivative,
+    pub velocity: D,
     pub spring: f32,
     pub damping: f32,
 }
