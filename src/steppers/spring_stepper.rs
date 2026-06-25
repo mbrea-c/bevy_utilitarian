@@ -52,15 +52,6 @@ where
     }
 }
 
-impl<T, D> SpringStepper<T, D> {
-    pub fn add_velocity(&mut self, delta_v: D)
-    where
-        D: Add<D, Output = D> + Clone,
-    {
-        self.velocity = self.velocity.clone() + delta_v;
-    }
-}
-
 // --- Concrete implementations
 // -------------------------------------------------------------------------------
 
